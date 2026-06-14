@@ -13,6 +13,7 @@ const GeneratePage = () => {
   const [logoPreview, setLogoPreview] = useState('');
   const [qrImage, setQrImage] = useState('');
   const [message, setMessage] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!logoFile) {
