@@ -8,16 +8,24 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (saving) return;
+    console.log('Login started');
+    setSaving(true);
     try {
       const response = await api.post('/api/auth/login', { email, password });
+      console.log('Login success');
       login(response.data.user, response.data.token);
       navigate('/dashboard');
     } catch (err) {
+      console.log('Login failed', err);
       setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -34,7 +42,7 @@ const LoginPage = () => {
           <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3" required />
         </label>
         {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-white hover:bg-slate-700">Sign in</button>
+        <button type="submit" disabled={saving} className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-white hover:bg-slate-700 disabled:opacity-60 disabled:cursor-not-allowed">{saving ? 'Signing in…' : 'Sign in'}</button>
       </form>
       <p className="mt-6 text-sm text-slate-600">Need an account? <Link to="/register" className="text-sky-600">Register</Link></p>
     </div>
