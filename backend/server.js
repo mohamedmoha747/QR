@@ -15,7 +15,14 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 dotenv.config();
 const app = express();
 
-connectDB();
+connectDB()
+  .then(() => {
+    console.log('✅ MongoDB Connected Successfully');
+  })
+  .catch((error) => {
+    console.error(`❌ MongoDB Connection Failed: ${error.message}`);
+  });
+
 app.use(helmet());
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000' }));
 app.use(express.json({ limit: '10mb' }));
@@ -41,5 +48,5 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
