@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const qrSchema = new mongoose.Schema({
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
   name: { type: String, required: true, trim: true },
   type: {

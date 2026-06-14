@@ -26,8 +26,8 @@ const MyQrPage = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-3xl bg-white p-8 shadow-xl">
-        <h1 className="text-3xl font-semibold">My QR Codes</h1>
-        <p className="mt-3 text-slate-600">Manage your QR codes with a live preview, analytics, and dynamic URL editing.</p>
+        <h1 className="text-3xl font-semibold">QR Library</h1>
+        <p className="mt-3 text-slate-600">Browse generated QR codes, view analytics, and manage dynamic URLs without signing in.</p>
       </div>
       {error && <div className="rounded-3xl bg-red-50 p-6 text-red-700">{error}</div>}
       {loading ? (

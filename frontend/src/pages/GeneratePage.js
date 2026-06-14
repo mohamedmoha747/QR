@@ -228,7 +228,9 @@ const GeneratePage = () => {
         )}
         {renderFields()}
         <div className="flex flex-wrap items-center gap-4">
-          <button type="submit" className="rounded-2xl bg-slate-900 px-6 py-3 text-white hover:bg-slate-700">Create QR</button>
+          <button type="submit" disabled={saving} className="rounded-2xl bg-slate-900 px-6 py-3 text-white hover:bg-slate-700 disabled:opacity-60 disabled:cursor-not-allowed">
+            {saving ? 'Creating…' : 'Create QR'}
+          </button>
           {qrImage && (
             <a href={qrImage} download="qrcode.png" className="rounded-2xl bg-sky-600 px-6 py-3 text-white hover:bg-sky-500">
               Download QR

@@ -53,7 +53,7 @@ const createQr = asyncHandler(async (req, res) => {
   const svgData = await QRCode.toString(qrText, { type: 'svg', color: { dark: foregroundColor || '#000000', light: backgroundColor || '#ffffff' } });
 
   const qrCode = await QrCodeModel.create({
-    owner: req.user._id,
+    owner: req.user?._id,
     name,
     type,
     payload,
@@ -109,8 +109,11 @@ const buildVCard = (contact) => {
 };
 
 const getMyQrs = asyncHandler(async (req, res) => {
-  const query = { owner: req.user._id, status: { $ne: 'deleted' } };
+  const query = { status: { $ne: 'deleted' } };
 
+  if (req.user) {
+    query.owner = req.user._id;
+  }
   if (req.query.search) {
     query.name = { $regex: req.query.search, $options: 'i' };
   }
@@ -126,7 +129,7 @@ const getMyQrs = asyncHandler(async (req, res) => {
 });
 
 const getQrById = asyncHandler(async (req, res) => {
-  const qr = await QrCodeModel.findOne({ _id: req.params.id, owner: req.user._id });
+  const qr = await QrCodeModel.findById(req.params.id);
   if (!qr) {
     res.status(404);
     throw new Error('QR code not found');
@@ -135,7 +138,7 @@ const getQrById = asyncHandler(async (req, res) => {
 });
 
 const updateQr = asyncHandler(async (req, res) => {
-  const qr = await QrCodeModel.findOne({ _id: req.params.id, owner: req.user._id });
+  const qr = await QrCodeModel.findById(req.params.id);
   if (!qr) {
     res.status(404);
     throw new Error('QR code not found');
@@ -186,7 +189,7 @@ const updateQr = asyncHandler(async (req, res) => {
 });
 
 const deleteQr = asyncHandler(async (req, res) => {
-  const qr = await QrCodeModel.findOne({ _id: req.params.id, owner: req.user._id });
+  const qr = await QrCodeModel.findById(req.params.id);
   if (!qr) {
     res.status(404);
     throw new Error('QR code not found');
@@ -198,7 +201,7 @@ const deleteQr = asyncHandler(async (req, res) => {
 });
 
 const archiveQr = asyncHandler(async (req, res) => {
-  const qr = await QrCodeModel.findOne({ _id: req.params.id, owner: req.user._id });
+  const qr = await QrCodeModel.findById(req.params.id);
   if (!qr) {
     res.status(404);
     throw new Error('QR code not found');
@@ -257,7 +260,7 @@ const redirectDynamicQr = asyncHandler(async (req, res) => {
 
 const getQrAnalytics = asyncHandler(async (req, res) => {
   const qrId = req.params.id;
-  const qr = await QrCodeModel.findOne({ _id: qrId, owner: req.user._id });
+  const qr = await QrCodeModel.findById(qrId);
   if (!qr) {
     res.status(404);
     throw new Error('QR code not found');
