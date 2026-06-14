@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
 import api from '../services/api';
 
 const acceptedLogoTypes = ['image/png', 'image/jpeg', 'image/svg+xml'];
@@ -14,7 +13,6 @@ const GeneratePage = () => {
   const [logoPreview, setLogoPreview] = useState('');
   const [qrImage, setQrImage] = useState('');
   const [message, setMessage] = useState('');
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!logoFile) {
