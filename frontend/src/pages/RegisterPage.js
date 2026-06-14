@@ -19,7 +19,7 @@ const RegisterPage = () => {
     setSaving(true);
     try {
       const response = await api.post('/api/auth/register', { name, email, password });
-      console.log('Register success');
+      console.log('Register success', response.data);
       login(response.data.user, response.data.token);
       navigate('/dashboard');
     } catch (err) {

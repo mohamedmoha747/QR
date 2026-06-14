@@ -22,9 +22,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData, token) => {
+    console.log('login data:', userData, token);
+
+    if (!userData || typeof userData !== 'object') {
+      console.error('Invalid login user data:', userData);
+      return;
+    }
+
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('role', userData.role);
+    localStorage.setItem('role', userData.role || '');
     setUser(userData);
   };
 
