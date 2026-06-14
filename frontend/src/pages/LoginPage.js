@@ -13,7 +13,7 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/api/auth/login', { email, password });
       login(response.data.user, response.data.token);
       navigate('/dashboard');
     } catch (err) {

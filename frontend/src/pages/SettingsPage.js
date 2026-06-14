@@ -12,7 +12,7 @@ const SettingsPage = () => {
   const handleUpdate = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.put('/auth/profile', { name, avatarUrl, password });
+      const response = await api.put('/api/auth/profile', { name, avatarUrl, password });
       login(response.data.user, response.data.token);
       setMessage('Profile updated successfully');
     } catch (err) {
