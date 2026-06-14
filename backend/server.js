@@ -24,7 +24,13 @@ connectDB()
   });
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000' }));
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://qr-1-gq4t.onrender.com',
+  ],
+  credentials: true,
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('combined'));
