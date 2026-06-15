@@ -17,7 +17,6 @@ function App() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="generate" element={<GeneratePage />} />
         <Route path="qr" element={<GeneratePage />} />
-        <Route path="qr" element={<GeneratePage />} />
         <Route path="my-qrs" element={<MyQrPage />} />
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="team" element={<TeamPage />} />

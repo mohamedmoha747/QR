@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -48,6 +49,16 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/team', teamRoutes);
 app.use('/api/files', require('./routes/fileRoutes'));
 app.use('/public', express.static('public'));
+
+const frontendBuildPath = path.resolve(__dirname, '../frontend/build');
+app.use(express.static(frontendBuildPath));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/public')) {
+    return next();
+  }
+  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+});
 
 app.use(notFound);
 app.use(errorHandler);
